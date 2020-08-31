@@ -1,26 +1,22 @@
 package com.anangkur.jsonschemeapplication.molecule
 
 import android.content.res.ColorStateList
-import android.view.View
 import android.widget.CheckBox
 import android.widget.TableRow
 import androidx.core.content.ContextCompat
 import com.anangkur.jsonschemeapplication.R
+import com.anangkur.jsonschemeapplication.databinding.MoleculeFormCheckBoxBinding
 import com.anangkur.jsonschemeapplication.extensions.visible
 import com.anangkur.jsonschemeapplication.model.DynamicView
-import kotlinx.android.synthetic.main.molecule_form_check_box.view.*
-
 
 /**
  * Created by ilgaputra15
  * on Thursday, 19/03/2020 22.00
  * Mobile Engineer - https://github.com/ilgaputra15
  **/
-class FormCheckBoxViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) {
-
-    companion object {
-        const val layout = R.layout.molecule_form_check_box
-    }
+class FormCheckBoxViewHolder(
+    private val binding: MoleculeFormCheckBoxBinding
+) : BaseMoleculeViewHolder(binding.root) {
 
     private val datas = ArrayList<String>()
 
@@ -30,12 +26,12 @@ class FormCheckBoxViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) 
             val result = data.preview.toString().split(";")
             datas.addAll(result)
         }
-        itemView.textTitle.text = title
-        itemView.textDesc.let {
+        binding.textTitle.text = title
+        binding.textDesc.let {
             it.visible = data.jsonSchema.description != ""
             it.text = data.jsonSchema.description
         }
-        itemView.linearLayoutCheckBox.removeAllViews()
+        binding.linearLayoutCheckBox.removeAllViews()
         var index = 0
         val value = data.jsonSchema.items?.getAsJsonArray("enum")?.map { it.asString }
         value?.forEach {
@@ -52,10 +48,10 @@ class FormCheckBoxViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) 
             }
             if (datas.any { data -> data == it }) checkBox.isChecked
             checkBox.isEnabled = data.isEnable
-            itemView.linearLayoutCheckBox.addView(checkBox)
+            binding.linearLayoutCheckBox.addView(checkBox)
         }
         setError(data)
-        itemView.buttonHelp.let {
+        binding.buttonHelp.let {
             it.visible = data.uiSchemaRule.uiHelp != null
             it.setOnClickListener { criteriaDialog(data) }
         }
@@ -79,19 +75,19 @@ class FormCheckBoxViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) 
 
     private fun setError(data: DynamicView) {
         val color = if (data.isError && data.value == null) R.color.reddish else R.color.very_light_grey
-        itemView.viewLine.setBackgroundColor(ContextCompat.getColor(itemView.context, color))
+        binding.viewLine.setBackgroundColor(ContextCompat.getColor(itemView.context, color))
 
         if (data.isError && data.value == null)
-            itemView.textError.let {
+            binding.textError.let {
                 it.text = itemView.context.getString(R.string.text_can_not_empty, data.jsonSchema.title)
                 it.visible = data.isError
             }
         else if (data.isError && data.value != null)
-            itemView.textError.let {
+            binding.textError.let {
                 it.text = data.errorValue
                 it.visible = data.errorValue != null
             }
-        else itemView.textError.visible = false
+        else binding.textError.visible = false
     }
 
     fun setValue(value: String, isSelected: Boolean) {

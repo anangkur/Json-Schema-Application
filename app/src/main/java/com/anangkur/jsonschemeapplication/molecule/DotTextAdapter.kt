@@ -1,11 +1,9 @@
 package com.anangkur.jsonschemeapplication.molecule
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.anangkur.jsonschemeapplication.R
-import kotlinx.android.synthetic.main.item_dot_text.view.*
+import com.anangkur.jsonschemeapplication.databinding.ItemDotTextBinding
 
 /**
  * Created by ilgaputra15
@@ -19,20 +17,21 @@ class DotTextAdapter(private val data: List<String>) : RecyclerView.Adapter<Recy
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : RecyclerView.ViewHolder {
         return PartViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-            R.layout.item_dot_text,
-            parent,
-            false
-        ))
+            ItemDotTextBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as PartViewHolder).bind(data[position])
     }
 
-    class PartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class PartViewHolder(private val binding: ItemDotTextBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(part: String) {
-            itemView.textValue.text = part
+            binding.textValue.text = part
         }
     }
 }

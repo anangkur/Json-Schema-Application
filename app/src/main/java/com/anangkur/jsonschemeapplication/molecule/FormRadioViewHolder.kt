@@ -1,27 +1,24 @@
 package com.anangkur.jsonschemeapplication.molecule
 
 import android.content.res.ColorStateList
-import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
 import com.anangkur.jsonschemeapplication.R
+import com.anangkur.jsonschemeapplication.databinding.MoleculeFormRadioBinding
 import com.anangkur.jsonschemeapplication.extensions.visible
 import com.anangkur.jsonschemeapplication.model.DynamicView
-import kotlinx.android.synthetic.main.molecule_form_radio.view.*
-
 
 /**
  * Created by ilgaputra15
  * on Sunday, 22/03/2020 16.04
  * Mobile Engineer - https://github.com/ilgaputra15
  **/
-class FormRadioViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) {
+class FormRadioViewHolder(
+    private val binding: MoleculeFormRadioBinding
+) : BaseMoleculeViewHolder(binding.root) {
 
-    companion object {
-        const val layout = R.layout.molecule_form_radio
-    }
     var name = ""
     private val params = RadioGroup.LayoutParams(
         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -31,13 +28,13 @@ class FormRadioViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) {
     fun bind(data: DynamicView) {
         var id = 0
         val title = if (data.isRequired) "${data.jsonSchema.title} *" else data.jsonSchema.title
-        itemView.textTitle.text = title
+        binding.textTitle.text = title
         val value = if (data.jsonSchema.enum != null) {
             data.jsonSchema.enum.map { it.asString }
         } else {
             listOf("Ya", "Tidak")
         }
-        itemView.radioGroup.removeAllViews()
+        binding.radioGroup.removeAllViews()
         value.forEach {
             val radioButton = generateRadioButton(it, id++)
             radioButton.setOnClickListener { _ ->
@@ -63,10 +60,10 @@ class FormRadioViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) {
                 if (preview == it) radioButton.isChecked = true
             }
             radioButton.isEnabled = data.isEnable
-            itemView.radioGroup.addView(radioButton)
+            binding.radioGroup.addView(radioButton)
         }
         setError(data)
-        itemView.buttonHelp.let {
+        binding.buttonHelp.let {
             it.visible = data.uiSchemaRule.uiHelp != null
             it.setOnClickListener { criteriaDialog(data) }
         }
@@ -87,18 +84,18 @@ class FormRadioViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) {
 
     private fun setError(data: DynamicView) {
         val color = if (data.isError && data.value == null) R.color.reddish else R.color.very_light_grey
-        itemView.viewLine.setBackgroundColor(ContextCompat.getColor(itemView.context, color))
+        binding.viewLine.setBackgroundColor(ContextCompat.getColor(itemView.context, color))
 
         if (data.isError && data.value == null)
-            itemView.textError.let {
+            binding.textError.let {
                 it.text = itemView.context.getString(R.string.text_can_not_empty, data.jsonSchema.title)
                 it.visible = data.isError
             }
         else if (data.isError && data.value != null)
-            itemView.textError.let {
+            binding.textError.let {
                 it.text = data.errorValue
                 it.visible = data.errorValue != null
             }
-        else itemView.textError.visible = false
+        else binding.textError.visible = false
     }
 }

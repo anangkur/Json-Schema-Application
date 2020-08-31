@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.anangkur.jsonschemeapplication.R
+import com.anangkur.jsonschemeapplication.databinding.DialogCriteriaSubmissionBinding
 import com.anangkur.jsonschemeapplication.extensions.fullExpanded
 import com.anangkur.jsonschemeapplication.extensions.visible
 import com.anangkur.jsonschemeapplication.model.DynamicView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_criteria_submission.view.*
 
 /**
  * Created by ilgaputra15
@@ -23,10 +23,10 @@ abstract class BaseMoleculeViewHolder(itemView: View) : RecyclerView.ViewHolder(
     @SuppressLint("InflateParams")
     override fun criteriaDialog(data: DynamicView) {
         val bottomDialog = BottomSheetDialog(itemView.context)
-        val layout = LayoutInflater.from(itemView.context).inflate(R.layout.dialog_criteria_submission, null)
-        bottomDialog.setContentView(layout)
+        val layout = DialogCriteriaSubmissionBinding.inflate(LayoutInflater.from(itemView.context))
+        bottomDialog.setContentView(layout.root)
         bottomDialog.show()
-        bottomDialog.fullExpanded(layout)
+        bottomDialog.fullExpanded(layout.root)
 
         val title = data.jsonSchema.title
         val helpImage = data.uiSchemaRule.uiHelpImage

@@ -1,36 +1,36 @@
 package com.anangkur.jsonschemeapplication.molecule
 
-import android.view.View
+import android.view.LayoutInflater
 import androidx.core.content.ContextCompat
 import com.anangkur.jsonschemeapplication.R
+import com.anangkur.jsonschemeapplication.databinding.DialogDropDownBinding
+import com.anangkur.jsonschemeapplication.databinding.MoleculeFormDropDownBinding
 import com.anangkur.jsonschemeapplication.extensions.afterTextChanged
 import com.anangkur.jsonschemeapplication.extensions.fullExpanded
 import com.anangkur.jsonschemeapplication.extensions.visible
 import com.anangkur.jsonschemeapplication.model.DropDownValue
 import com.anangkur.jsonschemeapplication.model.DynamicView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_drop_down.view.*
-import kotlinx.android.synthetic.main.molecule_form_drop_down.view.*
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 /**
  * Created by ilgaputra15
  * on Sunday, 22/03/2020 16.04
  * Mobile Engineer - https://github.com/ilgaputra15
  **/
-class FormDropDownViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) {
+class FormDropDownViewHolder(
+    private val binding: MoleculeFormDropDownBinding
+) : BaseMoleculeViewHolder(binding.root) {
 
     companion object {
-        const val layout = R.layout.molecule_form_drop_down
         const val LIMIT_SHOW_SEARCH = 15
     }
 
     fun bind(data: DynamicView) {
         val title = if (data.isRequired) "${data.jsonSchema.title} *" else data.jsonSchema.title
-        itemView.textTitle.text = title
-        itemView.textDesc.let {
+        binding.textTitle.text = title
+        binding.textDesc.let {
             it.text = data.jsonSchema.description
             it.visible = !data.jsonSchema.description.isNullOrEmpty()
         }
@@ -41,7 +41,7 @@ class FormDropDownViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) 
         if (data.preview != null) values.find { it.value == data.preview }?.isSelected = true
         showSelectedValue(placeholder, values)
 
-        itemView.frameValue.setOnClickListener {
+        binding.frameValue.setOnClickListener {
             dropDownDialog(placeholder, values) { list ->
                 values = list
                 val selected = list.find { it.isSelected }?.value
@@ -50,7 +50,7 @@ class FormDropDownViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) 
                 showSelectedValue(placeholder, values)
             }
         }
-        itemView.buttonHelp.let {
+        binding.buttonHelp.let {
             it.visible = data.uiSchemaRule.uiHelp != null
             it.setOnClickListener { criteriaDialog(data) }
         }
@@ -59,7 +59,7 @@ class FormDropDownViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) 
 
     private fun showSelectedValue(placeholder: String, list: ArrayList<DropDownValue>) {
         val selected = list.find { it.isSelected }
-        itemView.textValue.text = selected?.value ?: placeholder
+        binding.textValue.text = selected?.value ?: placeholder
     }
 
     private fun dropDownDialog(
@@ -69,9 +69,9 @@ class FormDropDownViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) 
     ) {
         val listCopy = ArrayList(list.map { it.copy() })
         val bottomDialog = BottomSheetDialog(itemView.context, R.style.DialogWithKeyboardStyle)
-        val layout = View.inflate(itemView.context, R.layout.dialog_drop_down, null)
-        bottomDialog.setContentView(layout)
-        bottomDialog.fullExpanded(layout)
+        val layout = DialogDropDownBinding.inflate(LayoutInflater.from(itemView.context))
+        bottomDialog.setContentView(layout.root)
+        bottomDialog.fullExpanded(layout.root)
         val adapter = DropDownRecyclerAdapter(listCopy)
         with(layout) {
             editTextSearch.visible = list.size > LIMIT_SHOW_SEARCH
@@ -95,18 +95,18 @@ class FormDropDownViewHolder(itemView: View) : BaseMoleculeViewHolder(itemView) 
 
     private fun setError(data: DynamicView) {
         val color = if (data.isError) R.color.reddish else R.color.very_light_grey
-        itemView.viewLine.setBackgroundColor(ContextCompat.getColor(itemView.context, color))
+        binding.viewLine.setBackgroundColor(ContextCompat.getColor(itemView.context, color))
         if (data.isError && data.value == null)
-            itemView.textError.let {
+            binding.textError.let {
                 it.text = itemView.context.getString(R.string.text_can_not_empty, data.jsonSchema.title)
                 it.visible = data.isError
             }
         else if (data.isError && data.value != null)
-            itemView.textError.let {
+            binding.textError.let {
                 it.text = data.errorValue
                 it.visible = data.errorValue != null
             }
-        else itemView.textError.visible = false
+        else binding.textError.visible = false
     }
 
 }
