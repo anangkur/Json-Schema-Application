@@ -9,9 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anangkur.jsonschemeapplication.data.DataSource
+import com.anangkur.jsonschemeapplication.data.remote.model.CriteriaSubmission
 import com.anangkur.jsonschemeapplication.data.remote.model.Questions
 import com.anangkur.jsonschemeapplication.databinding.ActivityMainBinding
+import com.anangkur.jsonschemeapplication.model.DynamicView
+import com.anangkur.jsonschemeapplication.utils.Converts
 import com.anangkur.jsonschemeapplication.utils.extensions.visible
+import com.anangkur.jsonschemeapplication.utils.provideJsonSchema
+import com.anangkur.jsonschemeapplication.utils.provideUiSchema
 import com.anangkur.jsonschemeapplication.view.dialog.ChooseFilePhotoDialog
 import com.google.android.material.snackbar.Snackbar
 
@@ -72,7 +77,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun successGetQuestion(data: Questions) {
-        Log.d("MainActivity", "question: $data")
+        binding.toolbar.title = data.project_title
+        val listDynamicView = createDynamicView(data)
+        val criteriaSubmissions = ArrayList(createCriteriaSubmissions(listDynamicView))
+        adapter.setQuestions(listDynamicView)
     }
 
     private fun errorGetQuestion(errorMessage: String) {
@@ -92,7 +100,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLocation(key: String, isFixLocation: Boolean) {
-        Toast.makeText(this, "Under Maintenance!", Toast.LENGTH_SHORT).show()
+        Snackbar.make(binding.root, "Under Maintenance!", Snackbar.LENGTH_LONG).show()
     }
 
     private fun onFileSelected(key: String, uri: Uri?) {
@@ -107,5 +115,32 @@ class MainActivity : AppCompatActivity() {
             }
         }
         adapter.updateItem(key)
+    }
+
+    private fun createDynamicView(data: Questions): ArrayList<DynamicView> {
+        val dynamicViews = ArrayList<DynamicView>()
+        val properties = Converts.convertMapToJsonObject(data.question_schema.properties)
+        val uiSchema = Converts.convertMapToJsonObject(data.ui_schema)
+        properties.entrySet()
+            .forEach { entry ->
+                val jsonRule = provideJsonSchema(entry.value.asJsonObject)
+                val uiSchemaRule = provideUiSchema(uiSchema[entry.key].asJsonObject)
+                val isRequired = data.question_schema.required.any { it == entry.key }
+                dynamicViews.add(
+                    DynamicView(
+                        componentName = entry.key,
+                        jsonSchema = jsonRule,
+                        uiSchemaRule = uiSchemaRule,
+                        answerSchemaRule = null,
+                        isRequired = isRequired
+                    ))
+            }
+        dynamicViews.sortBy { it.uiSchemaRule.order }
+        return dynamicViews
+    }
+
+    private fun createCriteriaSubmissions(data: ArrayList<DynamicView>): List<CriteriaSubmission> {
+        return data.filter { it.uiSchemaRule.uiHelp != null }
+            .map { CriteriaSubmission(it.jsonSchema.title, it.uiSchemaRule.uiHelp, it.uiSchemaRule.uiHelpImage) }
     }
 }

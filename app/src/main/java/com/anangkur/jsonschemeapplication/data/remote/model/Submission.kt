@@ -150,3 +150,10 @@ data class RejectedAll(
     @SerializedName("reason") val reason: String,
     @SerializedName("additional_reason") val additional_reason: String
 )
+
+@Parcelize
+data class CriteriaSubmission(
+    val title: String,
+    val help: String?,
+    val helpImage: String?
+) : Parcelable
