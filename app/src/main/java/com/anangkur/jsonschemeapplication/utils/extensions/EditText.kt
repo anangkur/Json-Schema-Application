@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication.extensions
+package com.anangkur.jsonschemeapplication.utils.extensions
 
 import android.text.Editable
 import android.text.TextWatcher

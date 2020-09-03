@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication.feature.main
+package com.anangkur.jsonschemeapplication.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setupToolbar()
         setupAdapter()
         setupViewModel()
+        observeViewModel()
     }
 
     private fun setupToolbar(){
@@ -38,5 +39,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
+
+    private fun observeViewModel() {
+        viewModel.successGetQuestion.observe(this, { data ->  })
+        viewModel.loadingGetQuestion.observe(this, { isLoading ->  })
+        viewModel.errorGetQuestion.observe(this, { errorMessage ->  })
     }
 }

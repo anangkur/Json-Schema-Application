@@ -1,11 +1,11 @@
-package com.anangkur.jsonschemeapplication.feature.main
+package com.anangkur.jsonschemeapplication.view.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.anangkur.jsonschemeapplication.databinding.*
 import com.anangkur.jsonschemeapplication.model.DynamicView
-import com.anangkur.jsonschemeapplication.molecule.*
+import com.anangkur.jsonschemeapplication.view.molecule.*
 
 /**
  * Created by ilgaputra15

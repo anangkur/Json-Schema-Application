@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication.molecule
+package com.anangkur.jsonschemeapplication.view.molecule
 
 import android.content.res.ColorStateList
 import android.widget.CheckBox
@@ -6,8 +6,8 @@ import android.widget.TableRow
 import androidx.core.content.ContextCompat
 import com.anangkur.jsonschemeapplication.R
 import com.anangkur.jsonschemeapplication.databinding.MoleculeFormCheckBoxBinding
-import com.anangkur.jsonschemeapplication.extensions.visible
 import com.anangkur.jsonschemeapplication.model.DynamicView
+import com.anangkur.jsonschemeapplication.utils.extensions.visible
 
 /**
  * Created by ilgaputra15

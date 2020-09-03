@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication.molecule
+package com.anangkur.jsonschemeapplication.view.molecule
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.anangkur.jsonschemeapplication.R
 import com.anangkur.jsonschemeapplication.databinding.ItemFilterBinding
-import com.anangkur.jsonschemeapplication.extensions.visible
 import com.anangkur.jsonschemeapplication.model.DropDownValue
+import com.anangkur.jsonschemeapplication.utils.extensions.visible
 
 /**
  * Created by ilgaputra15
