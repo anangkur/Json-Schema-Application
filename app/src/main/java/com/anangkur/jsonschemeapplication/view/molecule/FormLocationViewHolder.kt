@@ -1,11 +1,11 @@
-package com.anangkur.jsonschemeapplication.molecule
+package com.anangkur.jsonschemeapplication.view.molecule
 
 import androidx.core.content.ContextCompat
 import com.anangkur.jsonschemeapplication.R
 import com.anangkur.jsonschemeapplication.databinding.MoleculeFormLocationBinding
-import com.anangkur.jsonschemeapplication.extensions.visible
 import com.anangkur.jsonschemeapplication.model.DynamicView
 import com.anangkur.jsonschemeapplication.model.Location
+import com.anangkur.jsonschemeapplication.utils.extensions.visible
 
 /**
  * Created by ilgaputra15

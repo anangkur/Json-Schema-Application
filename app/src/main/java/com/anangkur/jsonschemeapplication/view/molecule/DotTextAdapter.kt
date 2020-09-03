@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication.molecule
+package com.anangkur.jsonschemeapplication.view.molecule
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

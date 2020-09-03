@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication.molecule
+package com.anangkur.jsonschemeapplication.view.molecule
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.anangkur.jsonschemeapplication.R
 import com.anangkur.jsonschemeapplication.databinding.DialogCriteriaSubmissionBinding
-import com.anangkur.jsonschemeapplication.extensions.fullExpanded
-import com.anangkur.jsonschemeapplication.extensions.visible
+import com.anangkur.jsonschemeapplication.utils.extensions.fullExpanded
 import com.anangkur.jsonschemeapplication.model.DynamicView
+import com.anangkur.jsonschemeapplication.utils.extensions.visible
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 

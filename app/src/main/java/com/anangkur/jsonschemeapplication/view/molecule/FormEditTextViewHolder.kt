@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication.molecule
+package com.anangkur.jsonschemeapplication.view.molecule
 
 import android.text.Editable
 import android.text.InputType
@@ -6,9 +6,9 @@ import android.text.TextWatcher
 import androidx.core.content.ContextCompat
 import com.anangkur.jsonschemeapplication.R
 import com.anangkur.jsonschemeapplication.databinding.MoleculeFormEditTextBinding
-import com.anangkur.jsonschemeapplication.extensions.visible
 import com.anangkur.jsonschemeapplication.model.DynamicView
 import com.anangkur.jsonschemeapplication.utils.Validation
+import com.anangkur.jsonschemeapplication.utils.extensions.visible
 
 /**
  * Created by ilgaputra15

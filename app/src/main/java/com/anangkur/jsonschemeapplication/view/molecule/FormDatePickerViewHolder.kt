@@ -1,12 +1,12 @@
-package com.anangkur.jsonschemeapplication.molecule
+package com.anangkur.jsonschemeapplication.view.molecule
 
 import androidx.core.content.ContextCompat
 import com.anangkur.jsonschemeapplication.R
 import com.anangkur.jsonschemeapplication.databinding.MoleculeFormDatePickerBinding
-import com.anangkur.jsonschemeapplication.dialog.DateTimePickerDialog
-import com.anangkur.jsonschemeapplication.extensions.visible
+import com.anangkur.jsonschemeapplication.view.dialog.DateTimePickerDialog
 import com.anangkur.jsonschemeapplication.model.DynamicView
 import com.anangkur.jsonschemeapplication.utils.DateHelper
+import com.anangkur.jsonschemeapplication.utils.extensions.visible
 import java.util.*
 
 /**

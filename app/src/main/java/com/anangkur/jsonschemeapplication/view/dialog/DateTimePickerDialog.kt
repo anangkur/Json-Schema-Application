@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication.dialog
+package com.anangkur.jsonschemeapplication.view.dialog
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
