@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Json Scheme Application</string>
+
+    <string name="text_image">image</string>
+    <string name="text_empty"> </string>
+    <string name="text_can_not_empty"> %s tidak boleh kosong</string>
+    <string name="text_search">Cari…</string>
+    <string name="text_select">Pilih</string>
+    <string name="text_choose_date">Pilih tanggal</string>
+    <string name="text_please_filled">Tolong diisi</string>
+    <string name="text_take_file">Select</string>
+    <string name="text_choose_location">Pilih Lokasi</string>
+
+    <string name="molecule_address_city_title">Kota atau Kecamatan</string>
+    <string name="molecule_address_postal_code_title">Kode Pos</string>
+    <string name="molecule_address_postal_address_title">Alamat</string>
 </resources>
