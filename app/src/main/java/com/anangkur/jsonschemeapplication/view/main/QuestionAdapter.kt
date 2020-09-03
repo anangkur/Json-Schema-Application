@@ -17,7 +17,7 @@ class QuestionAdapter(
     private val itemClickListener: (widget: String, key: String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var datas: ArrayList<DynamicView> = ArrayList()
+    private val data: ArrayList<DynamicView> = ArrayList()
 
     companion object {
         const val EDIT_TEXT = 1
@@ -32,21 +32,26 @@ class QuestionAdapter(
     }
 
     fun setQuestions(list: ArrayList<DynamicView>) {
-        datas = list
+        data.clear()
+        data.addAll(list)
         notifyDataSetChanged()
     }
 
     fun updateItem(key: String) {
-        val item = datas.find { it.componentName == key }
-        notifyItemChanged(datas.indexOf(item))
+        val item = data.find { it.componentName == key }
+        notifyItemChanged(data.indexOf(item))
     }
 
     fun refreshAdapter() {
         notifyDataSetChanged()
     }
 
+    fun getData(): ArrayList<DynamicView> {
+        return data
+    }
+
     override fun getItemCount(): Int {
-        return datas.size
+        return data.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -67,7 +72,7 @@ class QuestionAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewType = holder.itemViewType
-        val listData = datas[position]
+        val listData = data[position]
         when (viewType) {
             EDIT_TEXT -> (holder as FormEditTextViewHolder).bind(listData )
             FILE_PHOTO -> (holder as FormFilePhotoViewHolder).bind(listData, itemClickListener)
@@ -82,7 +87,7 @@ class QuestionAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (datas[position].uiSchemaRule.uiWidget) {
+        return when (data[position].uiSchemaRule.uiWidget) {
             "file", "photo", "camera" -> FILE_PHOTO
             "updown" -> EDIT_TEXT
             "select" -> DROPDOWN
