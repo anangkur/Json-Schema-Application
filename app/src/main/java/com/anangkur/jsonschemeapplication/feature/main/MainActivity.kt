@@ -1,4 +1,4 @@
-package com.anangkur.jsonschemeapplication
+package com.anangkur.jsonschemeapplication.feature.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
