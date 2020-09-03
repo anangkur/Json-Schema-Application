@@ -13,7 +13,7 @@ import com.anangkur.jsonschemeapplication.molecule.*
  * Mobile Engineer - https://github.com/ilgaputra15
  **/
 
-class SubmissionAdapter(
+class QuestionAdapter(
     private val itemClickListener: (widget: String, key: String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
