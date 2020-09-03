@@ -2,10 +2,15 @@ package com.anangkur.jsonschemeapplication.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anangkur.jsonschemeapplication.data.DataSource
+import com.anangkur.jsonschemeapplication.data.remote.model.Questions
 import com.anangkur.jsonschemeapplication.databinding.ActivityMainBinding
+import com.anangkur.jsonschemeapplication.utils.extensions.visible
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         setupAdapter()
         setupViewModel()
         observeViewModel()
+
+        viewModel.getQuestions()
     }
 
     private fun setupToolbar(){
@@ -39,11 +46,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.repository = DataSource.getInstance()
     }
 
     private fun observeViewModel() {
-        viewModel.successGetQuestion.observe(this, { data ->  })
-        viewModel.loadingGetQuestion.observe(this, { isLoading ->  })
-        viewModel.errorGetQuestion.observe(this, { errorMessage ->  })
+        viewModel.successGetQuestion.observe(this, { data ->  successGetQuestion(data)})
+        viewModel.loadingGetQuestion.observe(this, { isLoading ->  loadingGetQuestion(isLoading)})
+        viewModel.errorGetQuestion.observe(this, { errorMessage ->  errorGetQuestion(errorMessage)})
+    }
+
+    private fun loadingGetQuestion(isLoading: Boolean) {
+        binding.pbQuestion.visible = isLoading
+    }
+
+    private fun successGetQuestion(data: Questions) {
+        Log.d("MainActivity", "question: $data")
+    }
+
+    private fun errorGetQuestion(errorMessage: String) {
+        Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
     }
 }

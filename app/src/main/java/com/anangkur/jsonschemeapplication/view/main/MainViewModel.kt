@@ -29,9 +29,11 @@ class MainViewModel: ViewModel() {
                 _loadingGetQuestion.postValue(false)
                 _successGetQuestion.postValue(response)
             } catch (throwable: Throwable) {
+                throwable.printStackTrace()
                 _errorGetQuestion.postValue(throwable.message)
                 _loadingGetQuestion.postValue(false)
             } catch (exception: Exception) {
+                exception.printStackTrace()
                 _errorGetQuestion.postValue(exception.message)
                 _loadingGetQuestion.postValue(false)
             }

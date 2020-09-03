@@ -15,11 +15,20 @@
         app:title="@string/app_name"
         app:titleTextColor="@color/white"/>
 
+    <ProgressBar
+        android:id="@+id/pb_question"
+        style="?android:progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_below="@id/toolbar"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_question"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/pb_question"
         android:layout_above="@id/btn_submit"
         tools:listitem="@layout/molecule_form_edit_text"/>
 
